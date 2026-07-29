@@ -1,29 +1,33 @@
-# Baroque Flute Fingering Chart
+# Flute Fingering Charts
 
-Transcription of Margaret Neuhaus's baroque flute (traverso) fingering chart. Designed for quick consultation on mobile during practice.
+Multi-instrument fingering chart hub — Baroque Flute (Traverso), Transverse Flute, Piccolo, Recorder. Designed for quick consultation on mobile during practice.
 
-## Structure
+## Quick Start
 
-```
-index.html      — landing page with CTA, notes, abbreviations
-chart.html      — the fingering chart (5982 lines, 4 octaves)
-css/main.css    — design tokens (parchment/ebony/brass palette), dark mode, responsive
-js/chart.js     — dark toggle, back-to-top, IntersectionObserver octave nav
-js/index.js     — dark toggle only
+```bash
+npm install
+npm run dev      # localhost:5173
+npm run build    # production → dist/
 ```
 
-## Features
+See [GUIDE.md](GUIDE.md) for developer documentation.
 
-- **Sticky nav** with 4 octave links + IntersectionObserver highlight
-- **Dark mode** with localStorage persistence
-- **Responsive** — works from 320px mobile up to desktop
-- **Print-friendly** — hides nav rows, adjusts colors for paper
+## Instruments
 
-## Design
+| Instrument | Status |
+|---|---|
+| Baroque Flute (Traverso) | ✅ Complete — 70 notes, 256 variations with historical sources |
+| Transverse Flute | Coming soon |
+| Piccolo | Coming soon |
+| Recorder | Coming soon |
 
-Instrument-inspired palette:
-- Parchment `#EDE3D0` / Ebony `#2A1B12` / Brass `#BF8B4A` / Boxwood `#DDC8A8`
-- Instrument Serif (display), Source Serif 4 (body), JetBrains Mono (utility)
+## Stack
+
+- [Vite](https://vitejs.dev/) — build tool
+- [React](https://react.dev/) 18 — UI framework
+- [TypeScript](https://www.typescriptlang.org/) — type safety
+- [React Router](https://reactrouter.com/) v6 — client-side routing
+- [Playwright](https://playwright.dev/) — E2E testing
 
 ## Credits
 
