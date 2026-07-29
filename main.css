@@ -1,0 +1,845 @@
+/* ==========================================================================
+   Baroque Flute Fingering Chart — Margaret Neuhaus
+   Design identity drawn from the instrument itself: boxwood, ebony, brass.
+   The fingering chart is the hero — holes are rendered as physical
+   circles on a warm wood body rather than abstract table data.
+   ========================================================================== */
+
+/* --- Reset --- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+/* --- Design Tokens --- */
+:root {
+  --parchment:   #F7F2EA;
+  --ebony:       #2A1B12;
+  --brass:       #BF8B4A;
+  --boxwood:     #DDC8A8;
+  --leather:     #5A4030;
+  --cream:       #EDE4D6;
+  --brass-light: #D4A96A;
+  --brass-dark:  #9E7030;
+
+  --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --font-body:    'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-utility: 'JetBrains Mono', 'Courier New', monospace;
+
+  --radius: 6px;
+}
+
+body.dark-mode {
+  --parchment:   #1A1008;
+  --ebony:       #E8DDD0;
+  --brass:       #D4A96A;
+  --boxwood:     #3D2B1E;
+  --leather:     #8A7A6A;
+  --cream:       #22150E;
+  --brass-light: #E0B87A;
+  --brass-dark:  #BF8B4A;
+}
+
+body.dark-mode #fingering-chart tr:has(.hole) {
+  background: linear-gradient(180deg, #3D2B1E, #2A1B12, #3D2B1E);
+}
+
+body.dark-mode .hole.closed {
+  background: radial-gradient(circle at 35% 35%, #1A1008, #0D0804);
+  box-shadow: inset 0 2px 3px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.2);
+}
+
+body.dark-mode .hole.open {
+  box-shadow: inset 0 0 0 2.5px var(--brass), 0 1px 2px rgba(0,0,0,0.15);
+}
+
+body.dark-mode .hole.shaded {
+  background: linear-gradient(135deg, #1A1008 48%, transparent 52%);
+  box-shadow: inset 0 0 0 2.5px var(--brass), 0 1px 2px rgba(0,0,0,0.15);
+}
+
+body.dark-mode .hole.closed:hover {
+  box-shadow: inset 0 2px 3px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.2), 0 0 0 3px var(--brass-light);
+}
+
+body.dark-mode .hole.open:hover {
+  box-shadow: inset 0 0 0 2.5px var(--brass), 0 1px 2px rgba(0,0,0,0.15), 0 0 0 3px var(--brass-light);
+}
+
+body.dark-mode .hole.shaded:hover {
+  box-shadow: inset 0 0 0 2.5px var(--brass), 0 1px 2px rgba(0,0,0,0.15), 0 0 0 3px var(--brass-light);
+}
+
+/* --- Base --- */
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--parchment);
+  color: var(--ebony);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { border: 0; max-width: 100%; height: auto; }
+a { text-decoration: none; }
+a:link { color: var(--brass-dark); }
+a:visited { color: var(--leather); }
+a:hover { color: var(--brass); }
+a:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* --- Layout --- */
+#wrapper {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 24px 48px;
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 2.75rem;
+  line-height: 1.15;
+  text-align: center;
+  margin: 40px 0 4px;
+  letter-spacing: -0.02em;
+}
+
+h1 .subtitle {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--leather);
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.75rem;
+  margin: 48px 0 16px;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.15rem;
+  margin: 0;
+  line-height: 1.3;
+}
+
+p {
+  margin: 16px 24px;
+}
+
+/* ==========================================================================
+   Site Header
+   ========================================================================== */
+
+.site-header {
+  text-align: center;
+  padding: 32px 0 8px;
+  border-bottom: 1px solid var(--boxwood);
+  margin-bottom: 32px;
+}
+
+.site-header .logo-link {
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.site-header .logo-link img {
+  width: 48px;
+  height: auto;
+  opacity: 0.7;
+  transition: opacity 0.25s;
+}
+
+.site-header .logo-link:hover img {
+  opacity: 1;
+}
+
+.site-header h1 {
+  margin: 4px 0 0;
+}
+
+.site-header h1 a {
+  color: inherit;
+}
+
+.site-header h1 a:hover {
+  color: var(--brass);
+}
+
+/* ==========================================================================
+   Chart Navigation (octave links in table)
+   ========================================================================== */
+
+#fingering-chart > tbody:first-of-type tr:nth-child(-n+4) td {
+  padding: 7px 14px;
+  background: var(--cream);
+  border-bottom: 1px solid var(--boxwood);
+  font-size: 0.9rem;
+  line-height: 1.9;
+}
+
+#fingering-chart > tbody:first-of-type tr:nth-child(-n+4) td b {
+  font-family: var(--font-utility);
+  font-size: 0.82rem;
+  color: var(--brass-dark);
+  margin-right: 6px;
+}
+
+#fingering-chart > tbody:first-of-type tr:nth-child(-n+4) a {
+  color: var(--leather);
+  padding: 2px 5px;
+  border-radius: 2px;
+  transition: color 0.15s, background 0.15s;
+  font-size: 0.88rem;
+  white-space: nowrap;
+}
+
+#fingering-chart > tbody:first-of-type tr:nth-child(-n+4) a:hover {
+  color: var(--ebony);
+  background: var(--boxwood);
+}
+
+/* ==========================================================================
+   Octave Navigation (sticky bar)
+   ========================================================================== */
+
+#octave-nav {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 12px;
+  background: var(--ebony);
+  border-radius: var(--radius);
+  max-width: 780px;
+  margin: 0 auto 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+#octave-nav .octave-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-family: var(--font-utility);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--cream);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+
+#octave-nav .octave-link:hover {
+  background: var(--brass-dark);
+  color: #fff;
+  transform: scale(1.1);
+}
+
+#octave-nav .octave-link.active {
+  background: var(--brass);
+  color: #fff;
+}
+
+#octave-nav .nav-label {
+  font-family: var(--font-utility);
+  font-size: 0.7rem;
+  color: var(--brass);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-right: 8px;
+  opacity: 0.8;
+}
+
+/* ==========================================================================
+   Back-to-top FAB
+   ========================================================================== */
+
+/* ==========================================================================
+   Dark Mode Toggle
+   ========================================================================== */
+
+#dark-toggle {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--leather);
+  border: 1px solid var(--boxwood);
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.5;
+  transition: opacity 0.3s, background 0.2s, color 0.2s, border-color 0.2s;
+  line-height: 1;
+}
+
+#dark-toggle:hover {
+  opacity: 1;
+  background: var(--cream);
+  color: var(--ebony);
+  border-color: var(--brass);
+}
+
+body.dark-mode #dark-toggle {
+  color: var(--brass);
+  border-color: var(--leather);
+}
+
+body.dark-mode #dark-toggle:hover {
+  background: var(--cream);
+  color: var(--ebony);
+  border-color: var(--brass);
+}
+
+/* ==========================================================================
+   Back-to-top FAB
+   ========================================================================== */
+
+#back-to-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--brass);
+  color: #fff;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s, transform 0.2s, background 0.2s;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+#back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+#back-to-top:hover {
+  background: var(--brass-dark);
+  transform: translateY(-2px);
+}
+
+/* Scroll offset for sticky nav */
+#octave-1,
+#octave-2,
+#octave-3,
+#octave-4 {
+  scroll-margin-top: 70px;
+}
+
+/* ==========================================================================
+   Fingering Chart — the core
+   ========================================================================== */
+
+#fingering-chart {
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+/* Note header row */
+#fingering-chart .note-header td {
+  background: var(--leather);
+  padding: 10px 16px;
+  border: none;
+}
+
+#fingering-chart .note-header h3 a {
+  color: var(--cream);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.2rem;
+  letter-spacing: 0.02em;
+}
+
+#fingering-chart .note-header h3 a:hover {
+  color: #fff;
+}
+
+/* Octave header row */
+#fingering-chart .octave-header td {
+  background: var(--brass);
+  padding: 5px 16px;
+  text-align: center;
+  font-family: var(--font-utility);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--cream);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: none;
+}
+
+
+
+/* --- Fingering rows — the wood body --- */
+#fingering-chart tr:has(.hole) {
+  background: linear-gradient(180deg, #DEC9A8, #D4BD99, #DEC9A8);
+}
+
+#fingering-chart tr:has(.hole) td {
+  padding: 7px 6px;
+  text-align: center;
+  vertical-align: middle;
+  border: none;
+}
+
+/* Hole cells */
+#fingering-chart tr:has(.hole) td:has(.hole) {
+  width: 48px;
+  min-width: 40px;
+  padding: 6px 2px;
+}
+
+/* Spacer cells (gaps between left/right hand, before key) */
+#fingering-chart tr:has(.hole) td:nth-child(4),
+#fingering-chart tr:has(.hole) td:nth-child(8),
+#fingering-chart tr:has(.hole) td:nth-child(10) {
+  width: 14px;
+  min-width: 8px;
+  padding: 0;
+}
+
+/* Sources / author credits column */
+#fingering-chart tr:has(.hole) td:nth-child(11) {
+  text-align: left;
+  padding-left: 16px;
+  font-family: var(--font-utility);
+  font-size: 0.75rem;
+  color: var(--leather);
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+/* --- Hole visual: circles on wood --- */
+.hole {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  vertical-align: middle;
+}
+
+.hole::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Closed hole = finger covering = dark ebony */
+.hole.closed {
+  background: radial-gradient(circle at 35% 35%, #3D2B1E, var(--ebony));
+  box-shadow: inset 0 2px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.15);
+}
+
+/* Open hole = ring showing wood underneath */
+.hole.open {
+  background: transparent;
+  box-shadow: inset 0 0 0 2.5px var(--ebony), 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Shaded / half-hole */
+.hole.shaded {
+  background: linear-gradient(135deg, var(--ebony) 48%, transparent 52%);
+  box-shadow: inset 0 0 0 2.5px var(--ebony), 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Hole hover */
+.hole:hover {
+  transform: scale(1.18);
+  cursor: default;
+}
+
+.hole.closed:hover {
+  box-shadow: inset 0 2px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.15), 0 0 0 3px var(--brass-light);
+}
+
+.hole.open:hover {
+  box-shadow: inset 0 0 0 2.5px var(--ebony), 0 1px 2px rgba(0,0,0,0.1), 0 0 0 3px var(--brass-light);
+}
+
+.hole.shaded:hover {
+  box-shadow: inset 0 0 0 2.5px var(--ebony), 0 1px 2px rgba(0,0,0,0.1), 0 0 0 3px var(--brass-light);
+}
+
+/* --- Spacer rows between sections --- */
+#fingering-chart tr:has(td[colspan="11"]) td {
+  padding: 0;
+  height: 16px;
+  border: none;
+}
+
+/* ==========================================================================
+   Chart Legend
+   ========================================================================== */
+
+.chart-legend {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin: 24px auto 16px;
+  max-width: 780px;
+  padding: 12px 20px;
+  background: var(--cream);
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  color: var(--leather);
+}
+
+.chart-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chart-legend-item .hole {
+  width: 20px;
+  height: 20px;
+}
+
+/* ==========================================================================
+   Content text on index page
+   ========================================================================== */
+
+.content-section {
+  max-width: 680px;
+  margin: 0 auto 32px;
+}
+
+.content-section p {
+  margin: 0 0 16px;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--leather);
+}
+
+.content-section p:first-child {
+  font-size: 1.1rem;
+  color: var(--ebony);
+}
+
+/* ==========================================================================
+   CTA Button (index page)
+   ========================================================================== */
+
+#cta-section {
+  margin: 32px auto;
+  max-width: 520px;
+}
+
+.cta-button {
+  display: block;
+  padding: 14px 20px;
+  background: var(--cream);
+  border-radius: var(--radius);
+  border-left: 3px solid var(--brass);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--ebony);
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+}
+
+.cta-button:hover {
+  background: var(--boxwood);
+  border-left-color: var(--brass-dark);
+  color: var(--ebony);
+  transform: translateX(4px);
+}
+
+/* ==========================================================================
+   Abbreviations Table (index page)
+   ========================================================================== */
+
+.abbrev-table {
+  width: 100%;
+  max-width: 520px;
+  margin: 16px auto;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.abbrev-table td {
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--boxwood);
+  color: var(--leather);
+}
+
+.abbrev-table tr:first-child td {
+  font-weight: 600;
+  color: var(--ebony);
+  border-bottom: 2px solid var(--brass);
+  font-family: var(--font-utility);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+}
+
+.abbrev-table tr:last-child td {
+  border-bottom: none;
+}
+
+.abbrev-table td:first-child {
+  font-family: var(--font-utility);
+  font-size: 0.8rem;
+  color: var(--brass-dark);
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+#footer {
+  text-align: center;
+  margin: 48px auto 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--boxwood);
+  font-size: 0.85rem;
+  color: var(--leather);
+  max-width: 680px;
+}
+
+#footer a {
+  color: var(--brass-dark);
+}
+
+#footer a:hover {
+  color: var(--brass);
+}
+
+#footer img {
+  margin-top: 12px;
+  opacity: 0.5;
+  transition: opacity 0.25s;
+  width: 32px;
+}
+
+#footer img:hover {
+  opacity: 0.8;
+}
+
+/* ==========================================================================
+   Misc overrides (handle old markup quirks)
+   ========================================================================== */
+
+/* Contact image inline */
+#contact {
+  vertical-align: text-top;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 720px) {
+  #wrapper {
+    padding: 0 12px 32px;
+  }
+
+  #fingering-chart {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h1 .subtitle {
+    font-size: 0.95rem;
+  }
+
+  #fingering-chart tr:has(.hole) td:has(.hole) {
+    width: 38px;
+    min-width: 32px;
+    padding: 4px 1px;
+  }
+
+  .hole {
+    width: 22px;
+    height: 22px;
+  }
+
+  #fingering-chart tr:has(.hole) td:nth-child(11) {
+    font-size: 0.65rem;
+    padding-left: 8px;
+  }
+
+  #fingering-chart .note-header td {
+    padding: 8px 10px;
+  }
+
+  #fingering-chart .note-header h3 a {
+    font-size: 1rem;
+  }
+
+  #fingering-chart > tbody:first-of-type tr:nth-child(-n+4) td {
+    font-size: 0.82rem;
+    padding: 6px 8px;
+  }
+
+  #octave-nav {
+    padding: 6px 8px;
+    gap: 2px;
+    border-radius: 4px;
+  }
+
+  #octave-nav .octave-link {
+    width: 30px;
+    height: 30px;
+    font-size: 0.75rem;
+  }
+
+  #back-to-top {
+    bottom: 16px;
+    right: 16px;
+    width: 38px;
+    height: 38px;
+    font-size: 1rem;
+  }
+
+  .chart-legend {
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 0.8rem;
+  }
+
+  p {
+    margin: 12px 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  #wrapper {
+    padding: 0 8px 24px;
+  }
+
+  #fingering-chart {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #fingering-chart tr:has(.hole) td:has(.hole) {
+    width: 32px;
+    min-width: 26px;
+    padding: 3px 0;
+  }
+
+  .hole {
+    width: 18px;
+    height: 18px;
+  }
+
+  #fingering-chart tr:has(.hole) td:nth-child(4),
+  #fingering-chart tr:has(.hole) td:nth-child(8),
+  #fingering-chart tr:has(.hole) td:nth-child(10) {
+    width: 6px;
+  }
+
+  #fingering-chart > tbody:first-of-type tr:nth-child(-n+4) { display: none; }
+
+  #octave-nav .octave-link {
+    width: 26px;
+    height: 26px;
+    font-size: 0.7rem;
+  }
+}
+
+/* ==========================================================================
+   Reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  .hole,
+  #octave-nav .octave-link,
+  #back-to-top,
+  #dark-toggle {
+    transition: none;
+  }
+
+  .hole:hover,
+  .hole.closed:hover,
+  .hole.open:hover,
+  .hole.shaded:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* ==========================================================================
+   Print
+   ========================================================================== */
+
+@media print {
+  body {
+    background: #fff;
+    font-size: 10pt;
+  }
+
+  #wrapper {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  #fingering-chart > tbody:first-of-type tr:nth-child(-n+4) { display: none; }
+
+  #fingering-chart tr:has(.hole) {
+    background: #f0ebe0 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  #fingering-chart .note-header td {
+    background: #5A4030 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  #fingering-chart .note-header h3 a {
+    color: #fff !important;
+  }
+}
