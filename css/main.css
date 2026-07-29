@@ -12,7 +12,7 @@ html { scroll-behavior: smooth; }
 
 /* --- Design Tokens --- */
 :root {
-  --parchment:   #F7F2EA;
+  --parchment:   #EDE3D0;
   --ebony:       #2A1B12;
   --brass:       #BF8B4A;
   --boxwood:     #DDC8A8;
