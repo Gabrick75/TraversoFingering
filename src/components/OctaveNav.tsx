@@ -1,14 +1,21 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function OctaveNav() {
-  const linksRef = useRef<Map<string, HTMLAnchorElement>>(new Map());
+  const [octaves, setOctaves] = useState<number[]>([]);
 
   useEffect(() => {
+    const bodies = [...document.querySelectorAll<HTMLElement>('tbody[id^="octave-"]')]
+      .map((el) => Number(el.id.replace('octave-', '')))
+      .filter((n) => Number.isFinite(n))
+      .sort((a, b) => a - b);
+    setOctaves(bodies);
+  }, []);
+
+  useEffect(() => {
+    const ids = octaves.map((n) => `octave-${n}`);
+    if (ids.length === 0) return;
+
     const links = document.querySelectorAll('#octave-nav .octave-link');
-    links.forEach((l) => {
-      const href = l.getAttribute('href');
-      if (href) linksRef.current.set(href, l as HTMLAnchorElement);
-    });
 
     const obs = new IntersectionObserver(
       (entries) => {
@@ -26,20 +33,22 @@ export default function OctaveNav() {
       { rootMargin: '-70px 0px -50% 0px' }
     );
 
-    document
-      .querySelectorAll('#octave-1, #octave-2, #octave-3, #octave-4')
-      .forEach((o) => obs.observe(o));
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) obs.observe(el);
+    });
 
     return () => obs.disconnect();
-  }, []);
+  }, [octaves]);
 
   return (
     <nav id="octave-nav">
       <span className="nav-label">Octaves</span>
-      <a href="#octave-1" className="octave-link"><span className="octave-num">1</span></a>
-      <a href="#octave-2" className="octave-link"><span className="octave-num">2</span></a>
-      <a href="#octave-3" className="octave-link"><span className="octave-num">3</span></a>
-      <a href="#octave-4" className="octave-link"><span className="octave-num">4</span></a>
+      {octaves.map((n) => (
+        <a key={n} href={`#octave-${n}`} className="octave-link">
+          <span className="octave-num">{n}</span>
+        </a>
+      ))}
     </nav>
   );
 }

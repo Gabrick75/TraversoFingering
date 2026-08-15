@@ -1,5 +1,4 @@
-// Auto-generated from chart.legacy.html
-// Do not edit directly — re-run `node scripts/extract-data.mjs` to regenerate
+// Baroque Flute fingering data
 
 export type HoleState = 'c' | 'o' | 's';
 

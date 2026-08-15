@@ -57,6 +57,11 @@ body.dark-mode .hole.shaded {
   box-shadow: inset 0 0 0 2.5px var(--brass), 0 1px 2px rgba(0,0,0,0.15);
 }
 
+body.dark-mode .hole.quarter {
+  background: conic-gradient(#1A1008 0 25%, transparent 25% 50%, #1A1008 50% 100%);
+  box-shadow: inset 0 0 0 2.5px var(--brass), 0 1px 2px rgba(0,0,0,0.15);
+}
+
 body.dark-mode .hole.closed:hover {
   box-shadow: inset 0 2px 3px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.2), 0 0 0 3px var(--brass-light);
 }
@@ -66,6 +71,10 @@ body.dark-mode .hole.open:hover {
 }
 
 body.dark-mode .hole.shaded:hover {
+  box-shadow: inset 0 0 0 2.5px var(--brass), 0 1px 2px rgba(0,0,0,0.15), 0 0 0 3px var(--brass-light);
+}
+
+body.dark-mode .hole.quarter:hover {
   box-shadow: inset 0 0 0 2.5px var(--brass), 0 1px 2px rgba(0,0,0,0.15), 0 0 0 3px var(--brass-light);
 }
 
@@ -485,6 +494,12 @@ body.dark-mode #dark-toggle:hover {
   box-shadow: inset 0 0 0 2.5px var(--ebony), 0 1px 2px rgba(0,0,0,0.1);
 }
 
+/* Three-quarter hole — cover most of the hole, bottom-right quarter open */
+.hole.quarter {
+  background: conic-gradient(var(--ebony) 0 25%, transparent 25% 50%, var(--ebony) 50% 100%);
+  box-shadow: inset 0 0 0 2.5px var(--ebony), 0 1px 2px rgba(0,0,0,0.1);
+}
+
 /* Hole hover */
 .hole:hover {
   transform: scale(1.18);
@@ -503,11 +518,361 @@ body.dark-mode #dark-toggle:hover {
   box-shadow: inset 0 0 0 2.5px var(--ebony), 0 1px 2px rgba(0,0,0,0.1), 0 0 0 3px var(--brass-light);
 }
 
+.hole.quarter:hover {
+  box-shadow: inset 0 0 0 2.5px var(--ebony), 0 1px 2px rgba(0,0,0,0.1), 0 0 0 3px var(--brass-light);
+}
+
 /* --- Spacer rows between sections --- */
 #fingering-chart tr:has(td[colspan="11"]) td {
   padding: 0;
   height: 16px;
   border: none;
+}
+
+/* ==========================================================================
+   Modern Flute Fingering Chart
+   Design identity drawn from the instrument: polished silver body, keywork.
+   ========================================================================== */
+
+#flute-chart {
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+#flute-chart .column-header th {
+  background: var(--boxwood);
+  padding: 4px 2px;
+  font-family: var(--font-utility);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--leather);
+  border: none;
+}
+
+#flute-chart .column-header th.spacer {
+  width: 12px;
+  padding: 0;
+}
+
+#flute-chart .note-header td {
+  background: var(--leather);
+  padding: 10px 16px;
+  border: none;
+}
+
+#flute-chart .note-header h3 a {
+  color: var(--cream);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.2rem;
+  letter-spacing: 0.02em;
+}
+
+#flute-chart .note-header h3 a:hover {
+  color: #fff;
+}
+
+#flute-chart .octave-header td {
+  background: var(--brass);
+  padding: 5px 16px;
+  text-align: center;
+  font-family: var(--font-utility);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--cream);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: none;
+}
+
+/* --- Fingering rows — the silver body --- */
+#flute-chart tr:has(.hole, .flute-key) {
+  background: linear-gradient(180deg, #E5E7EA, #CDD1D6, #E5E7EA);
+}
+
+#flute-chart tr:has(.hole, .flute-key) td {
+  padding: 7px 6px;
+  text-align: center;
+  vertical-align: middle;
+  border: none;
+}
+
+#flute-chart tr:has(.hole, .flute-key) td:has(.hole) {
+  width: 46px;
+  min-width: 38px;
+  padding: 6px 2px;
+}
+
+#flute-chart tr:has(.hole, .flute-key) td.spacer {
+  width: 12px;
+  min-width: 6px;
+  padding: 0;
+}
+
+#flute-chart tr:has(.hole, .flute-key) td.keys-cell {
+  min-width: 118px;
+}
+
+#flute-chart tr:has(.hole, .flute-key) td.desc-cell {
+  text-align: left;
+  padding-left: 12px;
+  font-family: var(--font-utility);
+  font-size: 0.72rem;
+  color: var(--leather);
+  line-height: 1.35;
+}
+
+#flute-chart tr:has(.hole, .flute-key) td.desc-cell .src {
+  color: var(--brass-dark);
+}
+
+#flute-chart tr:has(td[colspan="12"]) td {
+  padding: 0;
+  height: 16px;
+  border: none;
+}
+
+/* --- Hole visual on the metal body --- */
+#flute-chart .hole.closed {
+  background: radial-gradient(circle at 35% 35%, #5A646E, #2B3137);
+  box-shadow: inset 0 2px 3px rgba(0,0,0,0.45), 0 1px 2px rgba(0,0,0,0.2);
+}
+
+#flute-chart .hole.open {
+  box-shadow: inset 0 0 0 2.5px #7C878F, 0 1px 2px rgba(0,0,0,0.12);
+}
+
+#flute-chart .hole.shaded {
+  background: linear-gradient(135deg, #3A434D 48%, transparent 52%);
+  box-shadow: inset 0 0 0 2.5px #7C878F, 0 1px 2px rgba(0,0,0,0.12);
+}
+
+#flute-chart .hole.quarter {
+  background: linear-gradient(135deg, #3A434D 72%, transparent 76%);
+  box-shadow: inset 0 0 0 2.5px #7C878F, 0 1px 2px rgba(0,0,0,0.12);
+}
+
+#flute-chart .hole.closed:hover,
+#flute-chart .hole.open:hover,
+#flute-chart .hole.shaded:hover,
+#flute-chart .hole.quarter:hover {
+  box-shadow: inset 0 0 0 2.5px #7C878F, 0 1px 2px rgba(0,0,0,0.12), 0 0 0 3px var(--brass-light);
+}
+
+/* --- Keywork pills --- */
+.flute-key {
+  display: inline-block;
+  min-width: 22px;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-family: var(--font-utility);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  border: 1px solid #B9BEC4;
+  background: linear-gradient(180deg, #F5F7F9, #DDE1E5);
+  color: #3A434D;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.18);
+}
+
+.flute-key.gsharp,
+.flute-key.thumb {
+  border-color: #C9A05A;
+  background: linear-gradient(180deg, #F7ECD8, #E6D2AC);
+  color: #6B4E1E;
+}
+
+.flute-key.trill {
+  border-color: #9FB8CE;
+  background: linear-gradient(180deg, #EAF2F8, #D3E0EC);
+  color: #2C4A63;
+}
+
+.flute-key.gizmo {
+  border-color: #C97A5A;
+  background: linear-gradient(180deg, #FAE8E0, #EACBB8);
+  color: #7A3317;
+}
+
+.flute-key.bell {
+  border-color: #8C7AB9;
+  background: linear-gradient(180deg, #EFEAFB, #DDD3F2);
+  color: #4A3B73;
+  font-weight: 700;
+}
+
+.flute-key.none {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  color: #9AA0A6;
+}
+
+/* --- Flute key levers (SVG) --- */
+.keys-cluster {
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2px 5px;
+}
+
+.thumb-cluster {
+  flex-wrap: nowrap;
+  gap: 3px;
+}
+
+.key-lever {
+  --key-stroke: #9AA3AB;
+  --key-color: #B8862E;
+  --key-fill: #E8CE96;
+  --key-fill-soft: #F3E3BC;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.key-lever-svg {
+  display: block;
+  width: auto;
+  height: 30px;
+}
+
+.key-lever-svg.key-b-thumb,
+.key-lever-svg.key-bb-thumb {
+  height: 36px;
+}
+
+.key-lever-svg.key-foot,
+.key-lever-svg.key-eb {
+  height: 30px;
+}
+
+.key-lever-svg.key-gsharp {
+  height: 26px;
+}
+
+.key-lever-svg.key-trill {
+  height: 15px;
+}
+
+.key-lever .kp-touch,
+.key-lever .kp-rod,
+.key-lever .kp-arm,
+.key-lever .kp-bracket {
+  fill: none;
+  stroke: var(--key-stroke);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: fill 0.15s ease, stroke 0.15s ease;
+}
+
+.key-lever .kp-pad {
+  fill: transparent;
+  stroke: var(--key-stroke);
+  stroke-width: 1.4;
+  transition: fill 0.15s ease, stroke 0.15s ease;
+}
+
+.key-lever.is-pressed .kp-touch,
+.key-lever.is-pressed .kp-rod,
+.key-lever.is-pressed .kp-arm,
+.key-lever.is-pressed .kp-bracket {
+  fill: var(--key-fill-soft);
+  stroke: var(--key-color);
+  stroke-width: 1.5;
+}
+
+.key-lever.is-pressed .kp-pad {
+  fill: var(--key-fill);
+  stroke: var(--key-color);
+  stroke-width: 1.5;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+}
+
+.key-gizmo {
+  --key-color: #C97A5A;
+  --key-fill: #EACBB8;
+  --key-fill-soft: #F5D6C4;
+}
+
+.key-trill {
+  --key-color: #7FA6C4;
+  --key-fill: #D3E0EC;
+  --key-fill-soft: #E6F0F7;
+}
+
+.key-lever-label {
+  font-family: var(--font-utility);
+  font-size: 0.56rem;
+  font-weight: 600;
+  color: var(--leather);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+body.dark-mode .key-lever {
+  --key-stroke: #7B8590;
+}
+
+body.dark-mode .key-lever.is-pressed .kp-touch,
+body.dark-mode .key-lever.is-pressed .kp-rod,
+body.dark-mode .key-lever.is-pressed .kp-arm,
+body.dark-mode .key-lever.is-pressed .kp-bracket {
+  fill: var(--key-fill-soft);
+  stroke: var(--key-color);
+}
+
+body.dark-mode .key-lever.is-pressed .kp-pad {
+  fill: var(--key-fill);
+  stroke: var(--key-color);
+}
+
+.chart-source-note {
+  max-width: 780px;
+  margin: 32px auto 0;
+  text-align: center;
+  font-family: var(--font-utility);
+  font-size: 0.72rem;
+  color: var(--leather);
+}
+
+body.dark-mode #flute-chart tr:has(.hole, .flute-key) {
+  background: linear-gradient(180deg, #3A434D, #2B3137, #3A434D);
+}
+
+body.dark-mode #flute-chart .hole.closed {
+  background: radial-gradient(circle at 35% 35%, #0E1215, #05070A);
+  box-shadow: inset 0 2px 3px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.2);
+}
+
+body.dark-mode #flute-chart .hole.open {
+  box-shadow: inset 0 0 0 2.5px var(--brass), 0 1px 2px rgba(0,0,0,0.15);
+}
+
+body.dark-mode #flute-chart .hole.shaded {
+  background: linear-gradient(135deg, #E8DDD0 48%, transparent 52%);
+  box-shadow: inset 0 0 0 2.5px var(--brass), 0 1px 2px rgba(0,0,0,0.15);
+}
+
+body.dark-mode #flute-chart .hole.quarter {
+  background: linear-gradient(135deg, #E8DDD0 72%, transparent 76%);
+  box-shadow: inset 0 0 0 2.5px var(--brass), 0 1px 2px rgba(0,0,0,0.15);
+}
+
+body.dark-mode #flute-chart .hole.closed:hover,
+body.dark-mode #flute-chart .hole.open:hover,
+body.dark-mode #flute-chart .hole.shaded:hover,
+body.dark-mode #flute-chart .hole.quarter:hover {
+  box-shadow: inset 0 0 0 2.5px var(--brass), 0 1px 2px rgba(0,0,0,0.15), 0 0 0 3px var(--brass-light);
 }
 
 /* ==========================================================================
@@ -536,6 +901,45 @@ body.dark-mode #dark-toggle:hover {
 .chart-legend-item .hole {
   width: 20px;
   height: 20px;
+}
+
+/* Diagram-mode legend swatches — mirror the SVG tone holes */
+.fd-legend {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #000;
+  background: #fff;
+  flex-shrink: 0;
+}
+
+.fd-legend.closed {
+  background: #000;
+}
+
+.fd-legend.half {
+  background: linear-gradient(to bottom, #fff 50%, #000 50%);
+}
+
+.fd-legend.quarter {
+  background: conic-gradient(#000 0 25%, #fff 25% 50%, #000 50% 100%);
+}
+
+body.dark-mode .fd-legend {
+  border-color: var(--brass);
+  background: transparent;
+}
+
+body.dark-mode .fd-legend.closed {
+  background: radial-gradient(circle at 35% 35%, #1A1008, #0D0804);
+}
+
+body.dark-mode .fd-legend.half {
+  background: linear-gradient(to bottom, transparent 50%, #1A1008 50%);
+}
+
+body.dark-mode .fd-legend.quarter {
+  background: conic-gradient(#1A1008 0 25%, transparent 25% 50%, #1A1008 50% 100%);
 }
 
 /* ==========================================================================
@@ -699,6 +1103,12 @@ body.dark-mode #dark-toggle:hover {
     -webkit-overflow-scrolling: touch;
   }
 
+  #flute-chart {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
   h1 {
     font-size: 2rem;
   }
@@ -732,6 +1142,34 @@ body.dark-mode #dark-toggle:hover {
   }
 
   #fingering-chart > tbody:first-of-type tr:nth-child(-n+4) td {
+    font-size: 0.82rem;
+    padding: 6px 8px;
+  }
+
+  #flute-chart tr:has(.hole, .flute-key) td:has(.hole) {
+    width: 36px;
+    min-width: 30px;
+    padding: 4px 1px;
+  }
+
+  #flute-chart tr:has(.hole, .flute-key) td.keys-cell {
+    min-width: 96px;
+  }
+
+  #flute-chart tr:has(.hole, .flute-key) td.desc-cell {
+    font-size: 0.65rem;
+    padding-left: 8px;
+  }
+
+  #flute-chart .note-header td {
+    padding: 8px 10px;
+  }
+
+  #flute-chart .note-header h3 a {
+    font-size: 1rem;
+  }
+
+  #flute-chart > tbody:first-of-type tr:nth-child(-n+4) td {
     font-size: 0.82rem;
     padding: 6px 8px;
   }
@@ -797,6 +1235,41 @@ body.dark-mode #dark-toggle:hover {
 
   #fingering-chart > tbody:first-of-type tr:nth-child(-n+4) { display: none; }
 
+  #flute-chart tr:has(.hole, .flute-key) td:has(.hole) {
+    width: 30px;
+    min-width: 24px;
+    padding: 3px 0;
+  }
+
+  #flute-chart tr:has(.hole, .flute-key) td.spacer {
+    width: 6px;
+  }
+
+  #flute-chart {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #flute-chart .key-lever-svg {
+    height: 26px;
+  }
+
+  #flute-chart .key-lever-svg.key-b-thumb,
+  #flute-chart .key-lever-svg.key-bb-thumb {
+    height: 32px;
+  }
+
+  #flute-chart .key-lever-svg.key-gsharp {
+    height: 22px;
+  }
+
+  #flute-chart .key-lever-svg.key-trill {
+    height: 13px;
+  }
+
+  #flute-chart > tbody:first-of-type tr:nth-child(-n+4) { display: none; }
+
   #octave-nav .octave-link {
     width: 26px;
     height: 26px;
@@ -850,6 +1323,14 @@ body.dark-mode #dark-toggle:hover {
     print-color-adjust: exact;
   }
 
+  #flute-chart > tbody:first-of-type tr:nth-child(-n+4) { display: none; }
+
+  #flute-chart tr:has(.hole, .flute-key) {
+    background: #f0ebe0 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
   #fingering-chart .note-header td {
     background: #5A4030 !important;
     -webkit-print-color-adjust: exact;
@@ -859,4 +1340,123 @@ body.dark-mode #dark-toggle:hover {
   #fingering-chart .note-header h3 a {
     color: #fff !important;
   }
+}
+
+
+/* --- Flute Diagram SVG Styles --- */
+
+.flute-diagram {
+  width: 100%;
+  height: auto;
+  max-width: 600px;
+  display: block;
+  margin: 1rem auto;
+}
+
+/* Holes - BLACK = closed/pressed, WHITE = open/released */
+.fd-hole {
+  stroke: #000;
+  stroke-width: 2;
+  transition: fill 0.2s ease;
+}
+
+.fd-hole.closed {
+  fill: #000;
+}
+
+.fd-hole.open {
+  fill: #fff;
+}
+
+.fd-hole.half {
+  fill: #888;
+}
+
+.fd-hole.quarter {
+  fill: #ccc;
+}
+
+.fd-hole-top {
+  fill: #fff;
+}
+
+.fd-hole-bottom {
+  fill: #000;
+}
+
+.fd-hole-ring {
+  fill: none;
+  stroke: #000;
+  stroke-width: 2;
+}
+
+/* Divider line */
+.fd-divider {
+  stroke: #666;
+  stroke-width: 2;
+  opacity: 0.3;
+}
+
+/* Keys - BLACK = pressed, WHITE = not pressed */
+.fd-key {
+  transition: opacity 0.2s ease;
+}
+
+.fd-shape,
+.fd-open,
+.fd-closed {
+  stroke: #000;
+  stroke-width: 1.5;
+  transition: fill 0.2s ease;
+}
+
+.fd-key:not(.is-pressed) .fd-shape,
+.fd-key:not(.is-pressed) .fd-open {
+  fill: #fff;
+}
+
+.fd-key.is-pressed .fd-shape,
+.fd-key.is-pressed .fd-closed {
+  fill: #000;
+}
+
+.fd-key:not(.is-pressed) .fd-closed {
+  display: none;
+}
+
+.fd-key.is-pressed .fd-open {
+  display: none;
+}
+
+/* Dark mode - same rules */
+body.dark-mode .fd-hole {
+  stroke: #000;
+}
+
+body.dark-mode .fd-hole.closed {
+  fill: #000;
+}
+
+body.dark-mode .fd-hole.open {
+  fill: #fff;
+}
+
+body.dark-mode .fd-divider {
+  stroke: #666;
+}
+
+body.dark-mode .fd-shape,
+body.dark-mode .fd-open,
+body.dark-mode .fd-closed {
+  stroke: #000;
+}
+
+body.dark-mode .fd-key:not(.is-pressed) .fd-shape,
+body.dark-mode .fd-key:not(.is-pressed) .fd-open {
+  fill: #fff;
+}
+
+body.dark-mode .fd-key.is-pressed .fd-shape,
+body.dark-mode .fd-key.is-pressed .fd-closed {
+  fill: #000;
 }

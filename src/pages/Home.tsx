@@ -13,14 +13,12 @@ const instruments = [
     label: 'Transverse Flute',
     desc: 'Modern Böhm-system flute fingering chart',
     img: '/images/transverse-flute.jpeg',
-    badge: 'Coming soon',
   },
   {
     path: '/piccolo',
     label: 'Piccolo',
     desc: 'Piccolo fingering chart',
     img: '/images/piccolo.jpg',
-    badge: 'Coming soon',
   },
   {
     path: '/recorder',
@@ -62,15 +60,6 @@ export default function Home() {
         <div className="instrument-grid">
           {instruments.map(InstrumentCard)}
         </div>
-      </section>
-
-      <section className="content-section">
-        <h2>Notes on the transcription</h2>
-        <p>
-          Originally designed for the small screens of PDAs and early smartphones,
-          this page has been updated but remains usable on nearly any device,
-          including text-only browsers.
-        </p>
       </section>
     </>
   );

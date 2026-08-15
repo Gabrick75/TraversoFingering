@@ -1,7 +1,6 @@
+import FluteChartTable from '../components/FluteChartTable';
+import { transverseFluteData } from '../data/transverseFluteData';
+
 export default function TransverseFluteChart() {
-  return (
-    <section className="content-section" style={{ textAlign: 'center', padding: '48px 0' }}>
-      <p>This chart is being prepared. Check back soon.</p>
-    </section>
-  );
+  return <FluteChartTable data={transverseFluteData} diagram instrument="flute" />;
 }
