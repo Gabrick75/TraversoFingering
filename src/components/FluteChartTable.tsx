@@ -26,8 +26,8 @@ function renderThumb(thumb: string) {
   const either = thumb === 'T';
   return (
     <span className="keys-cluster thumb-cluster">
-      <KeyLever kind="b-thumb" label="B" pressed={either || thumb === 'B'} className="key-thumb" />
-      <KeyLever kind="bb-thumb" label="Bb" pressed={either || thumb === 'Bb'} className="key-thumb" />
+      <KeyLever kind="b-thumb" label="B" pressed={either || thumb === 'Bb'} className="key-thumb" />
+      <KeyLever kind="bb-thumb" label="Bb" pressed={either || thumb === 'B'} className="key-thumb" />
     </span>
   );
 }

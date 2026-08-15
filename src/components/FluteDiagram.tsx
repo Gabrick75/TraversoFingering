@@ -53,11 +53,15 @@ function FluteDiagram({ fingering: f, noteLabel, instrument = 'flute' }: FluteDi
    */
 
   const keyState = {
-    thumbB: f.thumb === 'B' || f.thumb === 'T' || pressed('BThumb') || pressed('thumb-b'),
-    thumbBb:
+    thumbB:
       f.thumb === 'Bb' ||
       pressed('BbThumb') ||
       pressed('thumb-bb'),
+    thumbBb:
+      f.thumb === 'B' ||
+      f.thumb === 'T' ||
+      pressed('BThumb') ||
+      pressed('thumb-b'),
 
     gsharp:
       f.gSharp ||
