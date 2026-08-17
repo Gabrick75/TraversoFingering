@@ -846,7 +846,9 @@ body.dark-mode .key-lever.is-pressed .kp-pad {
 }
 
 body.dark-mode #flute-chart tr:has(.hole, .flute-key) {
-  background: linear-gradient(180deg, #3A434D, #2B3137, #3A434D);
+  background:
+    repeating-linear-gradient(90deg, rgba(0,0,0,0.13) 0 1px, transparent 1px 4px, rgba(0,0,0,0.07) 4px 5px, transparent 5px 11px, rgba(0,0,0,0.05) 11px 12px, transparent 12px 19px),
+    linear-gradient(180deg, #3D2B1E, #2A1B12 55%, #3D2B1E);
 }
 
 body.dark-mode #flute-chart .hole.closed {
@@ -873,6 +875,43 @@ body.dark-mode #flute-chart .hole.open:hover,
 body.dark-mode #flute-chart .hole.shaded:hover,
 body.dark-mode #flute-chart .hole.quarter:hover {
   box-shadow: inset 0 0 0 2.5px var(--brass), 0 1px 2px rgba(0,0,0,0.15), 0 0 0 3px var(--brass-light);
+}
+
+/* ==========================================================================
+   Dark mode — small fixes, same warm identity
+   ========================================================================== */
+
+/* The sticky octave bar uses --ebony (ivory in dark mode), which flips it
+   to a pale stripe. Give it the warm wood bar it was designed to be. */
+body.dark-mode #octave-nav {
+  background: linear-gradient(180deg, #2E1F12, #211409);
+  border: 1px solid rgba(191, 139, 74, 0.35);
+}
+
+body.dark-mode #octave-nav .octave-link {
+  color: #EDE4D6;
+}
+
+body.dark-mode #octave-nav .octave-link:hover {
+  background: #BF8B4A;
+  color: #fff;
+}
+
+body.dark-mode #octave-nav .octave-link.active {
+  background: #D4A96A;
+  color: #fff;
+}
+
+/* Diagram rows sat on the dark page, so closed holes and pressed keys
+   (black) disappeared. Set them on a wood-grain body so black/white reads. */
+body.dark-mode #flute-chart.diagram-mode tr:has(.fd-cell) {
+  background:
+    repeating-linear-gradient(90deg, rgba(0,0,0,0.13) 0 1px, transparent 1px 4px, rgba(0,0,0,0.07) 4px 5px, transparent 5px 11px, rgba(0,0,0,0.05) 11px 12px, transparent 12px 19px),
+    linear-gradient(180deg, #3D2B1E, #2A1B12 55%, #3D2B1E);
+}
+
+body.dark-mode #flute-chart.diagram-mode tr:has(.fd-cell) td {
+  padding: 8px 10px;
 }
 
 /* ==========================================================================
